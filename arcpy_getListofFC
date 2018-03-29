@@ -1,0 +1,14 @@
+import arcpy,logging, os
+from arcpy import env
+env.workspace = r"C:\Users\user1\AppData\Roaming\ESRI\Desktop10.4\ArcCatalog\admin@sdedb.sde"
+featureclass = arcpy.ListFeatureClasses('ADMIN.*')
+path = r"D:\DB_Counts.txt"
+file = open(path, "a")
+for fc in featureclass:
+    cnt = arcpy.GetCount_management(fc)
+    desc = arcpy.Describe(fc)
+    gt = desc.shapeType
+    print (fc + " , " + str(cnt) + " , "+ gt)
+    file.write(time.strftime("%d-%m-%y") + " :, ")
+    file.write(fc + " , " + str(cnt) + " , " + gt+'\n')
+file.close()
